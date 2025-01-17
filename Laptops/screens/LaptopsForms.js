@@ -1,22 +1,37 @@
 import { useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { Input, Button } from "@rneui/base";
-import { GuardarLaptopRest } from "../restWeb/restLaptops";
+import { GuardarLaptopRest, editarLaptop } from "../restWeb/restLaptops";
 
-export const LaptopsForm = ({navigation}) => {
-  const [ID, setID] = useState();
-  const [marca, setMarca] = useState();
-  const [procesador, setProcesador] = useState();
-  const [memoria, setMemoria] = useState();
-  const [disco, setDisco] = useState();
+
+export const LaptopsForm = ({navigation,route}) => {
+
+
+  let laptopRetrieved = route.params.itemParam
+  let isNew = true
+
+  if(laptopRetrieved != null){
+    isNew = false
+
+  }
+
+
+  const [ID, setID] = useState(isNew?null:laptopRetrieved.id.toString());
+  const [marca, setMarca] = useState(isNew?null:laptopRetrieved.marca);
+  const [procesador, setProcesador] = useState(isNew?null:laptopRetrieved.procesador);
+  const [memoria, setMemoria] = useState(isNew?null:laptopRetrieved.memoria);
+  const [disco, setDisco] = useState(isNew?null:laptopRetrieved.disco);
+
+
+
 
   const ShowMessage = () => {
     console.log("ShowMessage se está ejecutando");
-    Alert.alert("Exito", "Registro creado con exito");
+    Alert.alert("Exito", isNew?"Registro creado con exito":"Registro editado con exito");
+    navigation.goBack();
   };
 
   const GuardarLaptop = () => {
-    navigation.goBack();
     GuardarLaptopRest(
       {
         id: ID,
@@ -29,12 +44,26 @@ export const LaptopsForm = ({navigation}) => {
     );
   };
 
+
+  const EditarContacto=()=>{
+
+    console.log("editando")
+    editarLaptop({
+      id: ID,
+      marca: marca,
+      procesador: procesador,
+      memoria: memoria,
+      disco: disco,
+    },ShowMessage);
+  }
+
   return (
     <View>
       <Input
         placeholder="Ingrese ID"
         keyboardType="number-pad"
         value={ID}
+        editable={isNew}
         onChangeText={(value) => {
           setID(value);
         }}
@@ -68,7 +97,7 @@ export const LaptopsForm = ({navigation}) => {
         }}
       />
 
-      <Button title="Guardar" onPress={GuardarLaptop} />
+      <Button title="Guardar" onPress={isNew?GuardarLaptop:EditarContacto} />
     </View>
   );
 };

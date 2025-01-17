@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { FlatList } from "react-native";
+import { FlatList, TouchableHighlight } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { getAllLaptops } from "../restWeb/restLaptops";
 import { Button } from "react-native";
@@ -8,7 +8,14 @@ import { ListItem, Icon, FAB } from "@rneui/themed";
 export const ScreenList = ({ navigation }) => {
   const LaptopsItem = ({ item }) => {
     return (
-      <ListItem>
+      <TouchableHighlight
+      
+        onPress={()=>{navigation.navigate("LaptopsForm",{itemParam: item})
+
+
+        }}
+      >      
+        <ListItem>
         <Icon name="desktop-mac" type="MaterialCommunityIcons" color="grey" />
         <ListItem.Content style={{ backgroundColor: "lightblue" }}>
           <ListItem.Title
@@ -20,12 +27,16 @@ export const ScreenList = ({ navigation }) => {
             }}
           >
             {item.marca}
+
           </ListItem.Title>
+
           <ListItem.Subtitle> {item.procesador} </ListItem.Subtitle>
           <ListItem.Subtitle> Memoria: {item.memoria} </ListItem.Subtitle>
           <ListItem.Subtitle> Disco: {item.disco} </ListItem.Subtitle>
         </ListItem.Content>
       </ListItem>
+      </TouchableHighlight>
+
     );
   };
 
@@ -61,7 +72,7 @@ export const ScreenList = ({ navigation }) => {
           color="lightblue"
           title="+"
           onPress={() => {
-            navigation.navigate("LaptopsForm");
+            navigation.navigate("LaptopsForm",{});
           }}
         />
       </View>
