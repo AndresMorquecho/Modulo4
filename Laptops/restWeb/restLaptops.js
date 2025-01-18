@@ -31,7 +31,7 @@ export const GuardarLaptopRest = (item, ShowMessage)=>{
         
         .then(
             response => {console.log(response)
-            ShowMessage();
+            ShowMessage("Registro creado con exito");
         }
         ).catch((error)=>{
             console.error("Error: ", error)
@@ -69,7 +69,35 @@ export const editarLaptop = (item, ShowMessage)=>{
         
         .then(
             response => {console.log(response)
-            ShowMessage();
+            ShowMessage("Registro editado con exito");
+        }
+        ).catch((error)=>{
+            console.error("Error: ", error)
+        })
+
+
+
+        
+};
+
+
+export const eliminarLaptop = (item, ShowMessage)=>{
+
+    const config = {
+        method: "DELETE"
+    }
+
+
+
+    fetch("http://192.168.1.9:8083/laptops/" + item.id, config).then(response => {
+        if (!response.ok){
+            throw new Error("error en la conexión" + response.statusText);
+        }
+        response.json()})
+        
+        .then(
+            response => {console.log(response)
+            ShowMessage("Registro eliminado con exito");
         }
         ).catch((error)=>{
             console.error("Error: ", error)

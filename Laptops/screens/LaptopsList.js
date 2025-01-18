@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import { FlatList, TouchableHighlight } from "react-native";
 import { StyleSheet, Text, View } from "react-native";
 import { getAllLaptops } from "../restWeb/restLaptops";
@@ -6,6 +6,14 @@ import { Button } from "react-native";
 import { ListItem, Icon, FAB } from "@rneui/themed";
 
 export const ScreenList = ({ navigation }) => {
+
+  useEffect(()=>{
+    
+    getAllLaptops(refreshList);
+
+
+  },[])
+
   const LaptopsItem = ({ item }) => {
     return (
       <TouchableHighlight
@@ -48,14 +56,7 @@ export const ScreenList = ({ navigation }) => {
 
   return (
     <View>
-      <View >
-        <Button
-          title="Consultar"
-          onPress={() => {
-            getAllLaptops(refreshList);
-          }}
-        />
-      </View>
+
 
       <View >
         <FlatList

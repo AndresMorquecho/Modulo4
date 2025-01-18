@@ -5,7 +5,7 @@ const puerto= 8083;
 
 
 const laptops = [
-    {id: 1, marca: "Lenono", procesador: "Interl core 3", memoria: "16 GB", disco: "1 TB"},
+    {id: 1, marca: "Lenovo", procesador: "Interl core 3", memoria: "16 GB", disco: "1 TB"},
     {id: 2, marca: "Sonny", procesador: "Interl core 7", memoria: "4 GB", disco: "2 TB"},
     {id: 3, marca: "HP", procesador: "Interl core 7", memoria: "8 GB", disco: "1 TB"},
     {id: 4, marca: "Dell", procesador: "Interl core 5", memoria: "16 GB", disco: "4 TB"},
@@ -80,7 +80,7 @@ app.put("/laptops/:idParam",(request, response)=>{
 app.delete("/laptops/:idParam",(request, response)=>{
     const id = request.params.idParam;
 
-    console.log("id a eliminar: ",id);
-    response.send("");
+
+    response.send({id:id});
 
 })

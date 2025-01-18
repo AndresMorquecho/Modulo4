@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Alert, StyleSheet, Text, View } from "react-native";
 import { Input, Button } from "@rneui/base";
-import { GuardarLaptopRest, editarLaptop } from "../restWeb/restLaptops";
+import { GuardarLaptopRest, editarLaptop, eliminarLaptop } from "../restWeb/restLaptops";
 
 
 export const LaptopsForm = ({navigation,route}) => {
@@ -25,9 +25,9 @@ export const LaptopsForm = ({navigation,route}) => {
 
 
 
-  const ShowMessage = () => {
+  const ShowMessage = (message) => {
     console.log("ShowMessage se está ejecutando");
-    Alert.alert("Exito", isNew?"Registro creado con exito":"Registro editado con exito");
+    Alert.alert("Exito", message);
     navigation.goBack();
   };
 
@@ -55,6 +55,23 @@ export const LaptopsForm = ({navigation,route}) => {
       memoria: memoria,
       disco: disco,
     },ShowMessage);
+  }
+
+  const confirmarEliminarLaptop = ()=>{
+
+    Alert.alert("Eliminar", "¿Esta seguro que quiere eliminar?",[{
+      text: "Si",
+      onPress: eliminarLaptops
+    },
+      {text: "No"},
+    ]);
+
+
+  }
+
+  const eliminarLaptops=()=>{
+
+    eliminarLaptop({id:laptopRetrieved.id},ShowMessage)
   }
 
   return (
@@ -98,6 +115,10 @@ export const LaptopsForm = ({navigation,route}) => {
       />
 
       <Button title="Guardar" onPress={isNew?GuardarLaptop:EditarContacto} />
+
+
+      {isNew?<View></View>:      <Button title="Eliminar" onPress={confirmarEliminarLaptop}/>}
+
     </View>
   );
 };
